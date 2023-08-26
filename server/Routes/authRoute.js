@@ -17,12 +17,12 @@ authRoute.get("/admin/login/:username/:password", async function (req, res) {
   const isExits = await Admin.findOne({ username});
   if (isExits) {
     if (isExits.password === password) {
-      res.status(200).json(isExits);
+      res.status(200).json({username:isExits.username,id:isExits._id});
     } else {
-        res.json({msg:"password is incorrect."})      
+        res.status(401).json({msg:"The password you entered is incorrect."})      
     }
   } else {
-    res.status(404).json({ msg: "User not found" });
+    res.status(404).json({ msg: "Please enter valid credentials." });
   }
 });
 module.exports = authRoute;
