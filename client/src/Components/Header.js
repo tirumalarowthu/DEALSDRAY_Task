@@ -1,12 +1,8 @@
-import React, { useState, useEffect } from 'react';
 import { Navbar, Nav } from 'react-bootstrap';
 import { toast } from 'react-toastify'
 import { Link, useNavigate } from 'react-router-dom'
 import "./HeaderStyles.css"
-import { useDispatch, useSelector } from 'react-redux';
 const Header = () => {
-    const [isFixed, setIsFixed] = useState(false);
-    const dispatch=useDispatch()
     const navigate = useNavigate()
     const logout = async() => {
         localStorage.removeItem("AdminInfo")
@@ -14,24 +10,8 @@ const Header = () => {
         navigate("/")
         window.location.reload(false)
     }
-    // Function to handle scroll event and update state
-    const handleScroll = () => {
-        if (window.pageYOffset > 300) {
-            setIsFixed(true);   
-        } else {
-            setIsFixed(false);
-        }
-    };
-
-    // Add event listener for scroll event on component mount
-    useEffect(() => {
-        window.addEventListener('scroll', handleScroll);
-        return () => window.removeEventListener('scroll', handleScroll);
-    }, []);
-    
-
     return (
-        <Navbar style={{fontWeight:"600",padding:"10px"}} bg="info" variant="dark" expand="lg" fixed={isFixed ? 'top' : ''}>
+        <Navbar style={{fontWeight:"600",padding:"10px"}} bg="info" variant="dark" expand="lg">
             <Navbar.Brand className='navLink' href="/">Home</Navbar.Brand>
             <Navbar.Toggle aria-controls="navbar-nav" />
             <Navbar.Collapse id="navbar-nav">

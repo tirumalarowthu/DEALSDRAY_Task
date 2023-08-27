@@ -1,29 +1,33 @@
-import React from 'react'
+import React, { useState } from 'react'
 import EmpForm from './EmpForm'
 import axios from 'axios'
 import { toast } from 'react-toastify'
 
 const NewEmployeeForm = () => {
+    const [loading,setLoading]=useState(false)
     //code for registration of new employee
+
+    
     const handleRegisterEmployee = async (formdata) => {
-        console.log("handle registrations form")
-        console.log(formdata)
+        setLoading(true)
         try {
-            await axios.post("http://localhost:8999/create/employee", formdata).then(res => {
-                toast.success(res.data.msg)
+            const res= await axios.post("http://localhost:8999/create/employee", formdata)
+            if(res){
+                await toast.success(res.data.msg)
                 console.log(res.data)
+                setLoading(false)
                 window.location.reload()
-            }
-            ).catch(err => console.log(err))
+            }   
         } catch (err) {
             console.log(err)
+            setLoading(false)
         }
     }
     return (
         <div>
             <div className=''>
                 <div className='w-50 ' style={{ margin: "0px auto ", background: "#efefef" }} >
-                    <EmpForm handleSubmit={handleRegisterEmployee} />
+                    <EmpForm handleSubmit={handleRegisterEmployee} loading={loading} setLoading={setLoading} />
                 </div>
             </div>
         </div>
