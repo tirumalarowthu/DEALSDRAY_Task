@@ -7,7 +7,6 @@ import "./EmployeeFormStyles.css"
 const CreateEmployee = () => {
     const [loading,setLoading]=useState(false)
     //code for registration of new employee
-
     
     const handleRegisterEmployee = async (formdata) => {
         setLoading(true)
@@ -16,6 +15,7 @@ const CreateEmployee = () => {
             if(res){
                 await toast.success(res.data.msg)
                 console.log(res.data)
+                alert(res.data.msg)
                 setLoading(false)
                 window.location.reload()
             }   
