@@ -63,12 +63,13 @@ const Login = ({ setIsLogin }) => {
             <div>
                 <form
                     style={{
-                        width: "400px",
                         margin: "20px auto",
                         padding: "20px",
                         border: "2px solid #efefef",
+                        width:"400px",
                         borderRadius: "10px",
                         boxShadow: "0px 0px 2px #efefef",
+                        className:"loginForm"
                     }}
                     className=""
                     onSubmit={handleLogin}
