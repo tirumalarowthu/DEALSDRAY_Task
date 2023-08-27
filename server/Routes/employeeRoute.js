@@ -15,7 +15,7 @@ employeeRoute.post("/create/employee", async (req, res) => {
             res.status(409).json({ msg: "Employee already exists with the email." })
         }
     } catch (err) {
-        console.log(err.message)
+        res.status(500).send(err.message)
     }
 
 
@@ -40,7 +40,7 @@ employeeRoute.get("/employee/:id", async (req, res) => {
     try {
         const employeeDetails = await Employee.findById(req.params.id);
         if (!employeeDetails) {
-            res.status(404).json({ msg: "Employee not found" });
+            res.status(404).json({ msg: "Employee not found in records." });
             return;
         }
         res.status(200).json({ employeeDetails });
@@ -54,18 +54,18 @@ employeeRoute.patch("/edit/employee/:id", async (req, res) => {
     try {
         const employeeDetails = await Employee.findById(req.params.id);
         if (!employeeDetails) {
-            res.status(404).json({ msg: "Employee not found" });
+            res.status(404).json({ msg: "Employee not found in records." });
             return;
         }
 
-        // Check if the updated email is unique (excluding the current employee)
+        // Check if the updated email is unique 
         const existingEmployeeWithUpdatedEmail = await Employee.findOne({
             email: req.body.f_Email,
-            _id: { $ne: req.params.id } // Exclude the current employee by ID
+            _id: { $ne: req.params.id } 
         });
 
         if (existingEmployeeWithUpdatedEmail) {
-            res.status(400).json({ msg: "Email already exists for another employee." });
+            res.status(409).json({ msg: "Email already exists for another employee." });
             return;
         }
 

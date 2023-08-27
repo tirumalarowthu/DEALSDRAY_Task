@@ -10,19 +10,52 @@ const EmpForm = ({ handleSubmit, employeeData, loading, setLoading }) => {
         f_Course: "",
         f_Image: ""
     });
-    // console.log(formdata)
-    console.log(loading)
-    //loading buttons
+    const [errors, setErrors] = useState({});
+
+    ///validation for email and name and mobile number
+    const validate = () => {
+        let errors = {};
+        if (!formdata.f_Name) {
+            errors.f_Name = 'Name is required.';
+        } else if (!/^[a-zA-Z ]+$/.test(formdata.f_Name.trim())) {
+            errors.f_Name = 'Name should contain only alphabets and spaces';
+        }
+        if (!formdata.f_Email) {
+            errors.f_Email = 'Email is required.';
+        } else if (!/\S+@\S+\.\S+/.test(formdata.f_Email)) {
+            errors.f_Email = 'Invalid email address';
+        }
+        if (!formdata.f_Mobile) {
+            errors.f_Mobile = 'Mobile number is required.';
+        } else if (!/^[0-9]{10}$/.test(formdata.f_Mobile)) {
+            errors.f_Mobile = 'Mobile number should contain only 10 digits.';
+        } else if (!/^[6-9]\d{9}/.test(formdata.f_Mobile)) {
+            errors.f_Mobile = "Invalid mobile number."
+        }
+        setErrors(errors);
+        return Object.keys(errors).length === 0;
+    };
+    //updating form data on chaning input values
     const handleChangeFormdata = (e) => {
         const { name, value } = e.target;
         setFormdata({ ...formdata, [name]: value });
     };
     const handleFormSumbit = (e) => {
         e.preventDefault()
-        handleSubmit(formdata)
+        validate()
+        if (validate()===true) {
+            handleSubmit(formdata)
+        } else {
+            alert("Please enter valid details of the employee")
+            const focusEle = Object.keys(errors)[0]
+            if (focusEle) {
+                document.querySelector(`[name='${focusEle}']`).focus()
+                window.scrollTo(0, document.querySelector(`[name='${focusEle}']`).offsetTop)
+            }
+        }
     }
 
-    //adding picture
+    //Adding image url by uploading to the cloudfare
     const [pic, setPic] = useState();
     console.log(pic, "pic not selected")
     const [picLoading, setPicLoading] = useState(false);
@@ -63,17 +96,20 @@ const EmpForm = ({ handleSubmit, employeeData, loading, setLoading }) => {
         <div>
             <form onSubmit={handleFormSumbit} style={{ marginTop: "10px", borderRadius: "5px", padding: "20px" }} className='border border-2'>
                 <h4 className='text-center'>{employeeData ? "Edit Employee Details" : "Create New Employee"}</h4><hr />
-                <div className='mb-2'>
+                <div className='mb-2 '>
                     <label className='font-weight-bold' htmlFor='Name' >Name:</label>
                     <input className='form-control' type="text" name="f_Name" minLength={3} value={formdata.f_Name} onChange={handleChangeFormdata} required />
+                    {errors.f_Name && <p className='text-danger fw-semibold p-2'>{errors.f_Name}</p>}
                 </div>
                 <div className='mb-2'>
                     <label className='font-weight-bold' >Email:</label>
                     <input className='form-control' type="email" name="f_Email" value={formdata.f_Email} onChange={handleChangeFormdata} required />
+                    {errors.f_Email && <p className='text-danger fw-semibold p-2'>{errors.f_Email}</p>}
                 </div>
                 <div className='mb-2'>
                     <label className='font-weight-bold' >Mobile No:</label>
-                    <input className='form-control' type="number" min="6000000000" max="9999999999" name="f_Mobile" value={formdata.f_Mobile} onChange={handleChangeFormdata} required />
+                    <input className='form-control' type="number" name="f_Mobile" value={formdata.f_Mobile} onChange={handleChangeFormdata} required />
+                    {errors.f_Mobile && <p className='text-danger fw-semibold p-2'>{errors.f_Mobile}</p>}
                 </div>
 
                 <div className='mb-2'>
@@ -116,9 +152,7 @@ const EmpForm = ({ handleSubmit, employeeData, loading, setLoading }) => {
                 </div>
 
                 <div className='mt-2'>
-                    {/* {
-                        picLoading ? <input type="submit" className='form-control btn btn-warning' disabled value="Please wait image uploading..." /> : loadingbtns
-                    } */}
+
                     {picLoading ? (
                         <input
                             type="submit"
@@ -128,7 +162,7 @@ const EmpForm = ({ handleSubmit, employeeData, loading, setLoading }) => {
                         />
                     ) : loading ? (
                         <button className='btn btn-warning form-control p-2' disabled>
-                            <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                            <span className="spinner-border spinner-border-sm p-2" role="status" aria-hidden="true"></span>
                             <span>{employeeData ? "Updating employee details..." : "Creating new employee..."}</span>
 
                         </button>
@@ -160,4 +194,5 @@ export default EmpForm;
 //         }
 //     }
 //     setFormdata({ ...formdata, [name]: selectedCourses });
-// } else {
+// } else {}
+// const img= "http://res.cloudinary.com/du51yn1qe/image/upload/v1693110918/nbzjujjnby1tvdme2ix5.jpg"

@@ -19,7 +19,9 @@ const NewEmployeeForm = () => {
                 window.location.reload()
             }   
         } catch (err) {
-            console.log(err)
+            // console.log(err)
+            console.log(err.response.data.msg)
+            toast.warning(err.response.data.msg)
             setLoading(false)
         }
     }
