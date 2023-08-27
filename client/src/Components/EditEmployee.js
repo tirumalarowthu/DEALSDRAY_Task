@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react'
-import EmpForm from './EmpForm'
+import EmployeeForm from './EmployeeForm'
 import axios from 'axios'
 import { toast } from 'react-toastify'
 import { useNavigate, useParams } from 'react-router-dom'
-
+import { apiLink } from '../apiLink'
+import "./EmployeeFormStyles.css"
 const EditEmployee = () => {
     //code for registration of new employee
     const params = useParams()
@@ -14,7 +15,7 @@ const EditEmployee = () => {
     
     useEffect(() => {
         const getEmployeeDetails = async () => {
-            await axios.get(`http://localhost:8999/employee/${params.id}`).then(res => setEmpData(res.data.employeeDetails)).catch(err => {
+            await axios.get(`${apiLink}/employee/${params.id}`).then(res => setEmpData(res.data.employeeDetails)).catch(err => {
                 console.log(err.message)
             })
         }
@@ -25,7 +26,7 @@ const EditEmployee = () => {
     const handleEditEmployee = async (formdata) => {
         setLoading(true)
         try {
-            await axios.patch(`http://localhost:8999/edit/employee/${params.id}`, formdata).then(res => {
+            await axios.patch(`${apiLink}/edit/employee/${params.id}`, formdata).then(res => {
                 toast.success(res.data.msg)
                 navigate('/')
                 setLoading(false)
@@ -40,9 +41,9 @@ const EditEmployee = () => {
     return (
         <div>
             <div className=''>
-                <div className='w-50 ' style={{ margin: "0px auto ", background: "#efefef" }} >
+                <div className='employeeForm' style={{ margin: "0px auto ", background: "#efefef" }} >
                     {
-                        Object.keys(empData).length > 0 ? <EmpForm employeeData={empData} handleSubmit={handleEditEmployee} loading={loading} setLoading={setLoading} /> : <p className='text-center bg-light p-5'>Please wait...</p>
+                        Object.keys(empData).length > 0 ? <EmployeeForm employeeData={empData} handleSubmit={handleEditEmployee} loading={loading} setLoading={setLoading} /> : <p className='text-center bg-light p-5'><span className="spinner-border spinner-border-sm p-2" role="status" aria-hidden="true"></span>  Loading.Please wait...</p>
                     }
                 </div>
             </div>

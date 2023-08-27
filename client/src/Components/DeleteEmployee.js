@@ -3,15 +3,16 @@ import React, { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import { toast } from 'react-toastify';
+import { apiLink } from '../apiLink';
 
-export function DeleteModel({ name, email, id }) {
+export function DeleteEmployee({ name, email, id }) {
     const [show, setShow] = useState(false);
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
     const handleSaveChanges = async () => {
         try {
-            await axios.delete(`http://localhost:8999/delete/employee/${id}`)
+            await axios.delete(`${apiLink}/delete/employee/${id}`)
             toast.warning("Employee deleted successfully.")
             window.location.reload()
 

@@ -3,6 +3,7 @@ import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import "./LoginStyles.css"
+import { apiLink } from '../apiLink'
 const Login = ({ setIsLogin }) => {
     const [loginData, setLoginData] = useState({ username: "", password: "" });
     const [errormsg, setErrormsg] = useState({})
@@ -14,7 +15,7 @@ const Login = ({ setIsLogin }) => {
         setLoading(true)
         validation()
         if (validation() === true) {
-            await axios.get(`http://localhost:8999/admin/login/${loginData.username}/${loginData.password}`)
+            await axios.get(`${apiLink}/admin/login/${loginData.username}/${loginData.password}`)
                 .then((res) => {
                     console.log(res)
                     if (res.status === 200) {

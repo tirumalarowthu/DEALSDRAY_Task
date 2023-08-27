@@ -1,9 +1,10 @@
 import React, { useState } from 'react'
-import EmpForm from './EmpForm'
+import EmployeeForm from './EmployeeForm'
 import axios from 'axios'
 import { toast } from 'react-toastify'
-
-const NewEmployeeForm = () => {
+import { apiLink } from '../apiLink'
+import "./EmployeeFormStyles.css"
+const CreateEmployee = () => {
     const [loading,setLoading]=useState(false)
     //code for registration of new employee
 
@@ -11,7 +12,7 @@ const NewEmployeeForm = () => {
     const handleRegisterEmployee = async (formdata) => {
         setLoading(true)
         try {
-            const res= await axios.post("http://localhost:8999/create/employee", formdata)
+            const res= await axios.post(`${apiLink}/create/employee`, formdata)
             if(res){
                 await toast.success(res.data.msg)
                 console.log(res.data)
@@ -28,12 +29,12 @@ const NewEmployeeForm = () => {
     return (
         <div>
             <div className=''>
-                <div className='w-50 ' style={{ margin: "0px auto ", background: "#efefef" }} >
-                    <EmpForm handleSubmit={handleRegisterEmployee} loading={loading} setLoading={setLoading} />
+                <div className='employeeForm' style={{ margin: "0px auto ", background: "#efefef" }} >
+                    <EmployeeForm handleSubmit={handleRegisterEmployee} loading={loading} setLoading={setLoading} />
                 </div>
             </div>
         </div>
     )
 }
 
-export default NewEmployeeForm
+export default CreateEmployee

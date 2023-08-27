@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const EmpForm = ({ handleSubmit, employeeData, loading, setLoading }) => {
+const EmployeeForm = ({ handleSubmit, employeeData, loading, setLoading }) => {
     const [formdata, setFormdata] = useState(employeeData ? employeeData : {
         f_Name: "",
         f_Email: "",
@@ -177,7 +177,7 @@ const EmpForm = ({ handleSubmit, employeeData, loading, setLoading }) => {
     );
 };
 
-export default EmpForm;
+export default EmployeeForm;
 
 
 

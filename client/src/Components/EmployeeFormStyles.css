@@ -1,0 +1,9 @@
+.employeeForm {
+    width: 50%;
+    
+}
+@media only screen and (max-width: 600px) {
+    .employeeForm {
+        width: 100%;
+    }
+}

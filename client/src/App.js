@@ -3,7 +3,7 @@ import './App.css';
 import Homepage from './components/Homepage';
 import { useState } from 'react';
 import Header from './components/Header';
-import NewEmployeeForm from './components/NewEmployeeForm';
+import CreateEmployee from './components/CreateEmployee';
 import EditEmployee from './components/EditEmployee';
 import Login from './components/Login';
 function App() {
@@ -14,7 +14,7 @@ function App() {
         <Header />
         <Routes>
           <Route path="/" element={<Homepage />} ></Route>
-          <Route path="/create/employee" element={<NewEmployeeForm />}></Route>
+          <Route path="/create/employee" element={<CreateEmployee />}></Route>
           <Route path="/employee/edit/:id" element={<EditEmployee />}></Route>
         </Routes>
       </BrowserRouter> : <BrowserRouter>

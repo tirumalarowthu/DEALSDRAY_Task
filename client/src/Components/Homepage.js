@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
-import { DeleteModel } from './DeleteModel';
+import { DeleteEmployee } from './DeleteEmployee';
+import { apiLink } from '../apiLink';
 
 const Homepage = () => {
   const content = "Employees data is empty. Please add employees.";
@@ -13,7 +14,7 @@ const Homepage = () => {
   const fetchEmployeeList = async () => {
 
     try {
-      const res = await axios.get("http://localhost:8999/allEmployees");
+      const res = await axios.get(`${apiLink}/allEmployees`);
       setEmployeeList(res.data.employeeList);
       setFilteredEmployeeList(res.data.employeeList);
     } catch (err) {
@@ -63,9 +64,9 @@ const Homepage = () => {
           </div>
         }
 
-        <div className=''>
+        <div className='' style={{overflow:"auto"}}>
           {
-            pendingStatus ? <p className='text-center'>Loading please wait...</p> : <><table style={{ overflowY: "auto", width: "100%" }} border={1} className='table table-hover'>
+            pendingStatus ? <p className='text-center'><span className="spinner-border spinner-border-sm p-2" role="status" aria-hidden="true"></span>  Loading. please wait...</p> : <><table border={1} className='table table-hover'>
               <thead className='bg-light'>
                 <tr>
                   <th>ID</th>
@@ -99,7 +100,7 @@ const Homepage = () => {
                           <td>{new Date(item.createdAt).toLocaleDateString('en-US', options)}</td>
                           <td className='text-center'>
                             <Link to={`/employee/edit/${item._id}`} > <button style={{ marginRight: "10px" }} className='btn btn-primary'>Edit</button></Link>
-                            <DeleteModel name={item.f_Name} email={item.f_Email} id={item._id} />
+                            <DeleteEmployee name={item.f_Name} email={item.f_Email} id={item._id} />
                           </td>
                         </tr>
                       })
