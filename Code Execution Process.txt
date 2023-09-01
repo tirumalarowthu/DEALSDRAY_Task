@@ -1,0 +1,11 @@
+How run the code:
+First Start the server:
+D:\DEALSDRAY_Task\server>npm i
+and then 
+D:\DEALSDRAY_Task\server>npm start
+
+Next start client:
+D:\DEALSDRAY_Task\client>npm i
+and then
+D:\DEALSDRAY_Task\client>npm start
+ 

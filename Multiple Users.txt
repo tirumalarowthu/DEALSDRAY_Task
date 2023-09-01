@@ -1,0 +1,10 @@
+How to set different complanies use same Application
+1)By different domain names
+2)We can separate them by login and admin will send the register url .
+3)based on the admin login that will have db name
+schema like{
+	name:"Veera"
+	role:"admin",
+	mongodb:"Test",
+        
+}

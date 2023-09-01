@@ -17,9 +17,9 @@ const EmployeeForm = ({ handleSubmit, employeeData, loading, setLoading }) => {
         let errors = {};
         if (!formdata.f_Name) {
             errors.f_Name = 'Name is required.';
-        } else if (!/^[a-zA-Z ]+$/.test(formdata.f_Name.trim())) {
+         } else if (!/^[a-zA-Z\. ]+$/.test(formdata.f_Name.trim())) {
             errors.f_Name = 'Name should contain only alphabets and spaces';
-        }
+         }
         if (!formdata.f_Email) {
             errors.f_Email = 'Email is required.';
         } else if (!/\S+@\S+\.\S+/.test(formdata.f_Email)) {
